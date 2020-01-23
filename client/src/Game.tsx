@@ -129,12 +129,6 @@ ViroMaterials.createMaterials({
   pin: {
     diffuseTexture: require('./res/pinTexture.jpg'),
   },
-  white: {
-    lightingModel: 'PBR',
-    diffuseTexture: require('./res/tesla/object_car_main_Base_Color.png'),
-    metalnessTexture: require('./res/tesla/object_car_main_Metallic.png'),
-    roughnessTexture: require('./res/tesla/object_car_main_Roughness.png'),
-  },
 });
 
 const styles = StyleSheet.create({
