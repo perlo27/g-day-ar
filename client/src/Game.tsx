@@ -50,7 +50,7 @@ const Game: React.FC = () => {
         </>
       )}
 
-      {!gameState?.started && !gameState?.players[playerName] && (
+      {/* {!gameState?.started && !gameState?.players[playerName] && (
         <ViroText
           text="Connect"
           // scale={[0.5, 0.5, 0.5]}
@@ -63,7 +63,7 @@ const Game: React.FC = () => {
             });
           }}
         />
-      )}
+      )} */}
 
       {!gameState?.started && !!Object.keys(gameState?.players || {}).length && (
         <ViroText
@@ -90,34 +90,6 @@ const Game: React.FC = () => {
           }}
         />
       )}
-      {/* <ViroBox
-        // dragType="FixedToPlane"
-        // dragPlane={{
-        //   planePoint: [0, -1.5, 0],
-        //   planeNormal: [0, 1, 0],
-        //   maxDistance: 10,
-        // }}
-        onCollision={() => {
-          sendMessage({
-            player: playerName,
-            hit: true,
-          });
-        }}
-        onDrag={() => {}}
-        height={0.1}
-        length={0.3}
-        width={0.3}
-        position={initialPosition}
-        materials={['green']}
-        physicsBody={{
-          type: 'Static',
-          restitution: 1,
-          shape: {
-            type: 'Sphere',
-            params: [0.3],
-          },
-        }}
-      /> */}
 
       <ViroBox
         viroTag="ground"
@@ -128,10 +100,113 @@ const Game: React.FC = () => {
           });
         }}
         height={0.5}
-        length={15}
+        length={12}
         width={4}
-        position={[0, -2, -9]}
-        materials={['black']}
+        position={[0, -2, -7]}
+        materials={['ground']}
+        physicsBody={{
+          type: 'Static',
+          restitution: 0.5,
+        }}
+      />
+      <ViroBox
+        viroTag="cave"
+        height={0.5}
+        length={4}
+        width={7}
+        position={[0, -2.3, -15]}
+        materials={['side']}
+        physicsBody={{
+          type: 'Static',
+          restitution: 0.5,
+        }}
+      />
+      <ViroBox
+        viroTag="back"
+        height={7}
+        length={0.1}
+        width={3}
+        rotation={[0,0,-90]}
+        position={[0, -1, -18]}
+        materials={['side']}
+        physicsBody={{
+          type: 'Static',
+          restitution: 0.5,
+        }}
+      />
+      <ViroBox
+        viroTag="leftside"
+        height={0.1}
+        length={12}
+        width={0.5}
+        rotation={[0,0,15]}
+        position={[-2.25, -1.88, -7]}
+        materials={['side']}
+        physicsBody={{
+          type: 'Static',
+          restitution: 0.5,
+        }}
+      />
+      <ViroBox
+        viroTag="leftside"
+        height={0.1}
+        length={12}
+        width={0.5}
+        //rotation={[0,0,20]}
+        position={[-2.7, -1.9, -7]}
+        materials={['side']}
+        physicsBody={{
+          type: 'Static',
+          restitution: 0.5,
+        }}
+      />
+      <ViroBox
+        viroTag="leftside"
+        height={0.1}
+        length={16}
+        width={0.5}
+        rotation={[0,0,-90]}
+        position={[-3.1, -1.8, -9]}
+        materials={['side']}
+        physicsBody={{
+          type: 'Static',
+          restitution: 0.5,
+        }}
+      />
+      <ViroBox
+        viroTag="rightside"
+        height={0.1}
+        length={12}
+        width={0.5}
+        rotation={[0,0,-15]}
+        position={[2.25, -1.88, -7]}
+        materials={['side']}
+        physicsBody={{
+          type: 'Static',
+          restitution: 0.5,
+        }}
+      />
+      <ViroBox
+        viroTag="rightside"
+        height={0.1}
+        length={12}
+        width={0.5}
+        //rotation={[0,0,20]}
+        position={[2.7, -1.9, -7]}
+        materials={['side']}
+        physicsBody={{
+          type: 'Static',
+          restitution: 0.5,
+        }}
+      />
+      <ViroBox
+        viroTag="rightside"
+        height={0.1}
+        length={16}
+        width={0.5}
+        rotation={[0,0,-90]}
+        position={[3.1, -1.8, -9]}
+        materials={['side']}
         physicsBody={{
           type: 'Static',
           restitution: 0.5,
@@ -149,10 +224,10 @@ const Game: React.FC = () => {
           onDrag={() => {}}
           onFuse={() => { console.log('onFuse')}}
           onHover={() => { console.log('onFuse') }}
-          radius={0.20}
+          radius={0.2}
           ref={sphereInstance}
           position={[0, -1.5, -2]}
-          materials={['red']}
+          materials={['ball']}
           physicsBody={{
             type: 'Dynamic',
             mass: 6,
@@ -160,7 +235,7 @@ const Game: React.FC = () => {
           }}
         />
         <Viro3DObject source={require('./res/pin.obj')}
-              position={[0, -1.7, -15]}
+              position={[0, -1.7, -12]}
               resources={[require('./res/pinRessource.mtl'), require('./res/pinTexture.jpg')]}
               scale={[0.04,0.04,0.04]}
               rotation={[-90,0,0]}
@@ -176,6 +251,23 @@ const Game: React.FC = () => {
                 },
               }}
           />
+        {/* <Viro3DObject source={require('./res/ditch.obj')}
+              position={[-2.1, -1.79, -9.5]}
+              resources={[require('./res/ditch.mtl'), require('./res/ground.png')]}
+              //scale={[0.04,0.04,0.04]}
+              rotation={[-90,0,180]}
+            //  materials={["ditch"]}
+              type="OBJ" 
+              physicsBody={{
+                type: 'Static',
+                // mass: 1.5,
+                // restitution: 1,
+                shape: {
+                  type: 'Compound',
+                  params: [0.3,2,0.3],
+                },
+              }}
+          /> */}
       {/* )} */}
     </ViroARScene>
   );
@@ -188,15 +280,31 @@ ViroMaterials.createMaterials({
   },
   blue: {diffuseTexture: require('./res/grid_bg.jpg'), diffuseColor: 'blue'},
   red: {
-    diffuseTexture: require('./res/face.jpg'),
-    // diffuseColor: 'red',
+    // diffuseTexture: require('./res/face.jpg'),
+    diffuseColor: 'red',
   },
-  black: {
+  ground: {
     diffuseTexture: require('./res/ground.png'),
     // diffuseColor: 'green',
   },
+  ditch: {
+    // diffuseTexture: require('./res/ground.png'),
+    diffuseColor: 'green',
+  },
   pin: {
     diffuseTexture: require('./res/pinTexture.jpg'),
+    // diffuseColor: 'green',
+  },
+  ball: {
+    diffuseTexture: require('./res/ball.jpg'),
+    // diffuseColor: 'green',
+  },
+  side: {
+    diffuseTexture: require('./res/side.jpg'),
+    // diffuseColor: 'green',
+  },
+  wall: {
+    diffuseTexture: require('./res/wall.jpg'),
     // diffuseColor: 'green',
   },
 });
