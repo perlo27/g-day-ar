@@ -184,6 +184,29 @@ const Game: React.FC = () => {
           restitution: 1,
         }}
       />
+      <ViroText
+        text={`Player: ${playerName}` }
+        textAlign="left"
+        textAlignVertical="top"
+        textLineBreakMode="Justify"
+        textClipMode="ClipToBounds"
+        color="#444"
+        width={4} height={2}
+        outerStroke={{type:"Outline", width:1, color:'#fff'}}
+        position={[1.2,0.3,-6]}
+      />
+      <ViroText
+        text={'Score: I rule, b*tch!' }
+        textAlign="left"
+        textAlignVertical="top"
+        textLineBreakMode="Justify"
+        textClipMode="ClipToBounds"
+        color='#444'
+        width={4} height={2}
+        outerStroke={{type:'Outline', width:1, color:'#fff'}}
+        position={[1.2,0,-6]}
+      />
+
       {pinConfig.map((position, index) => (
         <Viro3DObject
           key={index}
