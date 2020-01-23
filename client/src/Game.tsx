@@ -203,11 +203,11 @@ const Game: React.FC = () => {
           type="OBJ"
           physicsBody={{
             type: 'Dynamic',
-            mass: 0.5,
-            restitution: 1,
+            mass: 2,
+            restitution: 0.1,
             shape: {
-              type: 'Box',
-              params: [0.3, 0.7, 0.3],
+              type: 'Compound',
+              params: [0.3, 0.5, 0.3],
             },
           }}
         />
