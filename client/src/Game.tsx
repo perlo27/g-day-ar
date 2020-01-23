@@ -70,14 +70,14 @@ const Game: React.FC = () => {
       <ViroBox
         viroTag="back"
         height={7}
-        length={0.1}
+        length={0.5}
         width={3}
         rotation={[0,0,-90]}
         position={[0, -1, -20]}
         materials={['side']}
         physicsBody={{
           type: 'Static',
-          restitution: 0.5,
+          restitution: 0,
         }}
       />
       <ViroBox
@@ -90,7 +90,7 @@ const Game: React.FC = () => {
         materials={['side']}
         physicsBody={{
           type: 'Static',
-          restitution: 0.5,
+          restitution: 0,
         }}
       />
       <ViroBox
@@ -103,7 +103,7 @@ const Game: React.FC = () => {
         materials={['side']}
         physicsBody={{
           type: 'Static',
-          restitution: 0.5,
+          restitution: 0,
         }}
       />
       <ViroBox
@@ -116,7 +116,7 @@ const Game: React.FC = () => {
         materials={['side']}
         physicsBody={{
           type: 'Static',
-          restitution: 0.5,
+          restitution: 0,
         }}
       />
       <ViroBox
@@ -129,7 +129,7 @@ const Game: React.FC = () => {
         materials={['side']}
         physicsBody={{
           type: 'Static',
-          restitution: 0.5,
+          restitution: 0,
         }}
       />
       <ViroBox
@@ -142,7 +142,7 @@ const Game: React.FC = () => {
         materials={['side']}
         physicsBody={{
           type: 'Static',
-          restitution: 0.5,
+          restitution: 0,
         }}
       />
       <ViroBox
@@ -155,7 +155,7 @@ const Game: React.FC = () => {
         materials={['side']}
         physicsBody={{
           type: 'Static',
-          restitution: 0.5,
+          restitution: 0,
         }}
       />
       <ViroSphere
@@ -180,7 +180,7 @@ const Game: React.FC = () => {
         materials={['dave']}
         physicsBody={{
           type: 'Dynamic',
-          mass: 4,
+          mass: 6,
           restitution: 1,
         }}
       />
@@ -204,10 +204,10 @@ const Game: React.FC = () => {
           physicsBody={{
             type: 'Dynamic',
             mass: 0.5,
-            restitution: 0.5,
+            restitution: 1,
             shape: {
               type: 'Box',
-              params: [0.3, 1.5, 0.3],
+              params: [0.3, 0.7, 0.3],
             },
           }}
         />
