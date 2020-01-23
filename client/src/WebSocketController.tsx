@@ -5,7 +5,7 @@ console.log('WebsocketController.tsx');
 console.log(DeviceInfo.getDeviceId(), DeviceInfo.getDeviceName());
 
 // The URL is currently hard coded. update update this to the server ip address
-const SERVER_IP = 'ws://192.168.1.101:8080';
+const SERVER_IP = 'ws://10.10.102.136:8080';
 
 export type MessageType = {
   deviceName: string;

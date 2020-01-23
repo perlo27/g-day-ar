@@ -6,6 +6,7 @@ import {
   ViroMaterials,
   ViroSphere,
   ViroText,
+  Viro3DObject
 } from 'react-viro';
 import useWSServer from './useWSServer';
 import {StyleSheet} from 'react-native';
@@ -24,20 +25,6 @@ const Game: React.FC = () => {
   return (
     <ViroARScene>
       <ViroAmbientLight color="#aaaaaa" />
-      {gameState?.started && !gameState?.done && (
-        <ViroSphere
-          viroTag="ball"
-          radius={0.15}
-          ref={sphereInstance}
-          position={[0, 1.5, -2]}
-          materials={['red']}
-          physicsBody={{
-            type: 'Dynamic',
-            mass: 0.3,
-            restitution: 1,
-          }}
-        />
-      )}
 
       {gameState?.started && ( // scores
         <>
@@ -103,13 +90,13 @@ const Game: React.FC = () => {
           }}
         />
       )}
-      <ViroBox
-        dragType="FixedToPlane"
-        dragPlane={{
-          planePoint: [0, -1.5, 0],
-          planeNormal: [0, 1, 0],
-          maxDistance: 10,
-        }}
+      {/* <ViroBox
+        // dragType="FixedToPlane"
+        // dragPlane={{
+        //   planePoint: [0, -1.5, 0],
+        //   planeNormal: [0, 1, 0],
+        //   maxDistance: 10,
+        // }}
         onCollision={() => {
           sendMessage({
             player: playerName,
@@ -130,7 +117,7 @@ const Game: React.FC = () => {
             params: [0.3],
           },
         }}
-      />
+      /> */}
 
       <ViroBox
         viroTag="ground"
@@ -140,16 +127,56 @@ const Game: React.FC = () => {
             done: true,
           });
         }}
-        height={0.1}
-        length={50}
-        width={50}
-        position={[0, -2, -2.5]}
+        height={0.5}
+        length={15}
+        width={4}
+        position={[0, -2, -9]}
         materials={['black']}
         physicsBody={{
           type: 'Static',
           restitution: 0.5,
         }}
       />
+      {/* {gameState?.started && !gameState?.done && ( */}
+        <ViroSphere
+          viroTag="ball"
+          dragType="FixedToPlane"
+          dragPlane={{
+            planePoint: [0, -1.5, 0],
+            planeNormal: [0, 1, 0],
+            maxDistance: 5,
+          }}
+          onDrag={() => {}}
+          onFuse={() => { console.log('onFuse')}}
+          onHover={() => { console.log('onFuse') }}
+          radius={0.20}
+          ref={sphereInstance}
+          position={[0, -1.5, -2]}
+          materials={['red']}
+          physicsBody={{
+            type: 'Dynamic',
+            mass: 6,
+            restitution: 1,
+          }}
+        />
+        <Viro3DObject source={require('./res/pin.obj')}
+              position={[0, -1.7, -15]}
+              resources={[require('./res/pinRessource.mtl'), require('./res/pinTexture.jpg')]}
+              scale={[0.04,0.04,0.04]}
+              rotation={[-90,0,0]}
+              materials={["pin"]}
+              type="OBJ" 
+              physicsBody={{
+                type: 'Dynamic',
+                mass: 1.5,
+                restitution: 1,
+                shape: {
+                  type: 'Compound',
+                  params: [0.3,2,0.3],
+                },
+              }}
+          />
+      {/* )} */}
     </ViroARScene>
   );
 };
@@ -161,12 +188,16 @@ ViroMaterials.createMaterials({
   },
   blue: {diffuseTexture: require('./res/grid_bg.jpg'), diffuseColor: 'blue'},
   red: {
-    diffuseTexture: require('./res/grid_bg.jpg'),
-    diffuseColor: 'red',
+    diffuseTexture: require('./res/face.jpg'),
+    // diffuseColor: 'red',
   },
   black: {
-    diffuseTexture: require('./res/grid_bg.jpg'),
-    diffuseColor: 'transparent',
+    diffuseTexture: require('./res/ground.png'),
+    // diffuseColor: 'green',
+  },
+  pin: {
+    diffuseTexture: require('./res/pinTexture.jpg'),
+    // diffuseColor: 'green',
   },
 });
 
