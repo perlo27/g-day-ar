@@ -176,7 +176,7 @@ const Game: React.FC = () => {
         radius={0.3}
         ref={sphereInstance}
         position={[0, -1.5, -2]}
-        rotation={[0,-110,15]}
+        rotation={[25,-110,-20]}
         materials={['dave']}
         physicsBody={{
           type: 'Dynamic',
