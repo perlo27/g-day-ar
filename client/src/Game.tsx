@@ -1,4 +1,10 @@
-import React, { useEffect, useMemo, useRef, useState } from 'react';
+import React, {
+  useCallback,
+  useEffect,
+  useMemo,
+  useRef,
+  useState,
+} from 'react';
 import {
   ViroARScene,
   ViroAmbientLight,
@@ -34,17 +40,57 @@ const Game: React.FC = () => {
     getDeviceDetails().then(details => setPlayerName(details.deviceName));
   }, []);
 
+  const refs = useMemo(
+    () => [
+      React.createRef(),
+      React.createRef(),
+      React.createRef(),
+      React.createRef(),
+      React.createRef(),
+      React.createRef(),
+      React.createRef(),
+      React.createRef(),
+      React.createRef(),
+      React.createRef(),
+    ],
+    [],
+  );
+
+  const [score, setScore] = useState(Array(10).fill(0));
+  const sum = score.reduce((acc, e) => acc + e, 0);
+  console.log('---> sum ', sum);
+  const sc2= useRef(0);
+
+  const checkScore = () => {
+    refs.forEach((r, index) => {
+      r?.current?.getTransformAsync().then(result => {
+        console.log(result.rotation[0]);
+        if (Math.abs(result.rotation[0] + 90) > 5) {
+        
+          result.rotation[0];
+          setScore((score) => {
+            let newscore = [...score];
+            console.log(newscore)
+            newscore[index] = 1;
+            return newscore;
+          });
+        }
+      });
+    });
+  };
+
+  useEffect(() => {
+    getDeviceDetails().then(details => setPlayerName(details.deviceName));
+  }, []);
+
   return (
     <ViroARScene>
       <ViroAmbientLight color="#aaaaaa" />
       <ViroBox
         viroTag="ground"
-        // onCollision={() => {
-        //   sendMessage({
-        //     player: playerName,
-        //     done: true,
-        //   });
-        // }}
+        onCollision={() => {
+          checkScore();
+        }}
         height={0.1}
         length={16}
         width={5}
@@ -55,7 +101,7 @@ const Game: React.FC = () => {
           restitution: 0.5,
         }}
       />
-        <ViroBox
+      <ViroBox
         viroTag="cave"
         height={0.5}
         length={4}
@@ -69,10 +115,15 @@ const Game: React.FC = () => {
       />
       <ViroBox
         viroTag="back"
+        onCollision={(target) =>{
+         if(target === 'ball') {
+           checkScore();
+         }
+        }}
         height={7}
         length={0.5}
         width={3}
-        rotation={[0,0,-90]}
+        rotation={[0, 0, -90]}
         position={[0, -1, -20]}
         materials={['side']}
         physicsBody={{
@@ -85,7 +136,7 @@ const Game: React.FC = () => {
         height={0.1}
         length={16}
         width={0.5}
-        rotation={[0,0,15]}
+        rotation={[0, 0, 15]}
         position={[-2.25, -1.88, -7]}
         materials={['side']}
         physicsBody={{
@@ -111,7 +162,7 @@ const Game: React.FC = () => {
         height={0.1}
         length={21}
         width={1.5}
-        rotation={[0,0,-90]}
+        rotation={[0, 0, -90]}
         position={[-3.1, -1.8, -9]}
         materials={['side']}
         physicsBody={{
@@ -124,7 +175,7 @@ const Game: React.FC = () => {
         height={0.1}
         length={16}
         width={0.5}
-        rotation={[0,0,-15]}
+        rotation={[0, 0, -15]}
         position={[2.25, -1.88, -7]}
         materials={['side']}
         physicsBody={{
@@ -150,7 +201,7 @@ const Game: React.FC = () => {
         height={0.1}
         length={21}
         width={1.5}
-        rotation={[0,0,-90]}
+        rotation={[0, 0, -90]}
         position={[3.1, -1.8, -9]}
         materials={['side']}
         physicsBody={{
@@ -176,50 +227,49 @@ const Game: React.FC = () => {
         radius={0.3}
         ref={sphereInstance}
         position={[0, -1.5, -2]}
-        rotation={[0,-110,15]}
+        rotation={[0, -110, 15]}
         materials={['dave']}
         physicsBody={{
           type: 'Dynamic',
-          mass: 6,
+          mass: 4,
           restitution: 1,
         }}
       />
       <ViroText
-        text={`Player: ${playerName}` }
+        text={`Player: ${playerName}`}
         textAlign="left"
         textAlignVertical="top"
         textLineBreakMode="Justify"
         textClipMode="ClipToBounds"
         color="#444"
-        width={4} height={2}
-        outerStroke={{type:"Outline", width:1, color:'#fff'}}
-        position={[1.2,0.3,-6]}
+        width={4}
+        height={2}
+        outerStroke={{ type: 'Outline', width: 1, color: '#fff' }}
+        position={[1.2, 0.3, -6]}
       />
       <ViroText
-        text={'Score: I rule, b*tch!' }
+        text={`Score: ${sum}`}
         textAlign="left"
         textAlignVertical="top"
         textLineBreakMode="Justify"
         textClipMode="ClipToBounds"
-        color='#444'
-        width={4} height={2}
-        outerStroke={{type:'Outline', width:1, color:'#fff'}}
-        position={[1.2,0,-6]}
+        color="#444"
+        width={4}
+        height={2}
+        outerStroke={{ type: 'Outline', width: 1, color: '#fff' }}
+        position={[1.2, 0, -6]}
       />
 
       {pinConfig.map((position, index) => (
         <Viro3DObject
           key={index}
-          // ref={a[index]}
+          ref={refs[index]}
           source={require('./res/pin.obj')}
           position={position}
           resources={[
             require('./res/pinRessource.mtl'),
             require('./res/pinTexture.jpg'),
           ]}
-          onTransformUpdate={() => {
-            console.log('---> qweqwe ');
-          }}
           scale={[0.04, 0.04, 0.04]}
           rotation={[-90, 0, 0]}
           materials={['pin']}
